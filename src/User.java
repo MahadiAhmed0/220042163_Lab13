@@ -7,6 +7,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import service.AuthenticationService;
+import service.MenuService;
 
 public class User {
 
@@ -19,10 +21,8 @@ public class User {
      */
     static String[][] adminUserNameAndPassword = new String[10][2];
     private static List<Customer> customersCollection = new ArrayList<>();
-
-    // ************************************************************
-    // Behaviours/Methods
-    // ************************************************************
+    private static AuthenticationService authService = new AuthenticationService();
+    private static MenuService menuService = new MenuService();
 
     public static void main(String[] args) {
         int countNumOfUsers = 1;
