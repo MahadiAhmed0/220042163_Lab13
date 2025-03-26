@@ -324,3 +324,50 @@ public class Flight extends FlightDistance {
     }
 
 }
+
+
+public class Flight {
+    private final String flightSchedule;
+    private final String flightNumber;
+    private final Airport origin;
+    private final Airport destination;
+    private final String gate;
+    private final FlightTime flightTime;
+    private int availableSeats;
+    private final List<Customer> registeredCustomers;
+
+    public Flight(String flightSchedule, String flightNumber, Airport origin, 
+                 Airport destination, String gate, int availableSeats) {
+        this.flightSchedule = flightSchedule;
+        this.flightNumber = flightNumber;
+        this.origin = origin;
+        this.destination = destination;
+        this.gate = gate;
+        this.availableSeats = availableSeats;
+        this.registeredCustomers = new ArrayList<>();
+        
+        double distance = DistanceCalculator.calculate(
+            origin.getLatitude(), origin.getLongitude(),
+            destination.getLatitude(), destination.getLongitude()
+        );
+        this.flightTime = FlightCalculator.calculateFlightTime(distance);
+    }
+
+    // Essential getters
+    public String getFlightNumber() { return flightNumber; }
+    public String getGate() { return gate; }
+    public int getAvailableSeats() { return availableSeats; }
+    
+    // Business logic
+    public boolean bookSeats(Customer customer, int numberOfSeats) {
+        if (availableSeats < numberOfSeats) {
+            return false;
+        }
+        
+        availableSeats -= numberOfSeats;
+        if (!registeredCustomers.contains(customer)) {
+            registeredCustomers.add(customer);
+        }
+        return true;
+    }
+}
